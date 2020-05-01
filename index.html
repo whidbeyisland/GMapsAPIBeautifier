@@ -1,8 +1,108 @@
 <!DOCTYPE html>
 <head>
-
+    <style>
+      body {
+        font-family: 'Tahoma', sans-serif;
+        background-color: black;
+        color: white;
+      }
+      #map {
+        height: 700px;
+        width: 100%;
+      }
+    </style>
 </head>
 <body>
-    
+    <h3>Scenic Route Picker</h3>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var anchor = {lat: 47.606347, lng: -122.333224};
+
+        var map = new google.maps.Map(
+            document.getElementById('map'), {
+              zoom: 11,
+              center: anchor,
+              styles: [
+                {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+                {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+                {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+                {
+                  featureType: 'administrative.locality',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#d59563'}]
+                },
+                {
+                  featureType: 'poi',
+                  elementType: 'all',
+                  stylers: [{"visibility": "off"}]
+                },
+                {
+                  featureType: 'landscape',
+                  elementType: 'labels',
+                  stylers: [{"visibility": "off"}]
+                },
+                {
+                  featureType: 'road',
+                  elementType: 'geometry',
+                  stylers: [{color: '#38414e'}]
+                },
+                {
+                  featureType: 'road',
+                  elementType: 'geometry.stroke',
+                  stylers: [{color: '#212a37'}]
+                },
+                {
+                  featureType: 'road',
+                  elementType: 'labels.text.fill',
+                  stylers: [{"visibility": "off"}]
+                },
+                {
+                  featureType: 'road',
+                  elementType: 'labels',
+                  stylers: [{"visibility": "off"}]
+                },
+                {
+                  featureType: 'road.highway',
+                  elementType: 'geometry',
+                  stylers: [{color: '#746855'}]
+                },
+                {
+                  featureType: 'road.highway',
+                  elementType: 'geometry.stroke',
+                  stylers: [{color: '#1f2835'}]
+                },
+                {
+                  featureType: 'road.highway',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#f3d19c'}]
+                },
+                {
+                  featureType: 'transit',
+                  elementType: 'all',
+                  stylers: [{"visibility": "off"}]
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'geometry',
+                  stylers: [{color: '#17263c'}]
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#515c6d'}]
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'labels.text.stroke',
+                  stylers: [{color: '#17263c'}]
+                }
+              ]
+            });
+        }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6T3KGjGonRtvWyilK1M48t6aolQQEBAk&callback=initMap">
+    </script>
 </body>
 </html>
