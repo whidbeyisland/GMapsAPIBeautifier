@@ -14,16 +14,13 @@
 </head>
 <body>
     <h3>Scenic Route Picker</h3>
+    <input id="latField" type="number">
+    <input id="longField" type="number">
+    <button type="button" id="testButton" onclick="moveCoords()">test</button>
     <div id="map"></div>
-    <script>
-      function initMap() {
-        var anchor = {lat: 47.606347, lng: -122.333224};
 
-        var map = new google.maps.Map(
-            document.getElementById('map'), {
-              zoom: 11,
-              center: anchor,
-              styles: [
+    <script>
+      var myStyles = [
                 {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
                 {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
                 {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
@@ -97,9 +94,27 @@
                   elementType: 'labels.text.stroke',
                   stylers: [{color: '#17263c'}]
                 }
-              ]
+              ];
+
+      function initMap() {
+        var map = new google.maps.Map(
+            document.getElementById('map'), {
+              zoom: 11,
+              center: {lat: 47.606347, lng: -122.333224},
+              styles: myStyles
             });
-        }
+      }
+
+      function moveCoords() {
+        newLat = parseFloat(document.getElementById('latField').value);
+        newLong = parseFloat(document.getElementById('longField').value);
+        var map = new google.maps.Map(
+            document.getElementById('map'), {
+              zoom: 11,
+              center: {lat: newLat, lng: newLong},
+              styles: myStyles
+            });
+      }
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6T3KGjGonRtvWyilK1M48t6aolQQEBAk&callback=initMap">
