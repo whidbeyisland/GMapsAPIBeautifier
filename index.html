@@ -28,6 +28,7 @@
     <input id="startDest" type="text">
     <input id="endDest" type="text">
     <button type="button" id="testButton" onclick="calcRoute()">Find Directions</button>
+    <button type="button" id="testButton2" onclick="getImgColors()">Find Colors</button>
     <div id="map"></div>
     <img id="street-view-img" src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=47.5763831,-122.4211769
     &fov=80&heading=70&pitch=0&key=AIzaSyD6T3KGjGonRtvWyilK1M48t6aolQQEBAk">
@@ -160,11 +161,20 @@
         var myStep1Coords = myRoute.steps[Math.floor(numOfSteps / 4)].end_location;
         var myStep2Coords = myRoute.steps[Math.floor(numOfSteps / 2)].end_location;
         var myStep3Coords = myRoute.steps[Math.floor(3 * numOfSteps / 4)].end_location;
-        //initStreetView(myStep2Coords.lat(), myStep2Coords.lng());
         updateStreetViewImg(myStep2Coords.lat(), myStep2Coords.lng());
       }
+
+      function getImgColors() {
+        var img = document.getElementById('street-view-img');
+        var canvas = document.createElement('canvas');
+        canvas.setAttribute("id", "myCanvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+        var pixelData = canvas.getContext('2d').getImageData(100, 100, 1, 1).data;
+        alert(pixelData);
+      }
     </script>
-    <!-- &libraries=places -->
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6T3KGjGonRtvWyilK1M48t6aolQQEBAk&callback=initialize">
     </script>
