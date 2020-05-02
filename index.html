@@ -23,7 +23,7 @@
     <h3>Scenic Route Picker</h3>
     <input id="startDest" type="text">
     <input id="endDest" type="text">
-    <button type="button" id="testButton" onclick="calcRoute()">Find directions</button>-->
+    <button type="button" id="testButton" onclick="calcRoute()">Find Directions</button>
     <div id="map"></div>
     <div id="street-view"></div>
 
@@ -145,12 +145,12 @@
         directionsService.route(request, function(result, status) {
           if (status == 'OK') {
             directionsRenderer.setDirections(result);
-            showDistance(result);
+            showStreetView(result);
           }
         });
       }
 
-      function showDistance(directionResult) {
+      function showStreetView(directionResult) {
         var myRoute = directionResult.routes[0].legs[0];
         var numOfSteps = myRoute.steps.length;
         var myStep1Coords = myRoute.steps[Math.floor(numOfSteps / 4)].end_location;
