@@ -109,7 +109,6 @@
 
       function initialize() {
         initMap();
-        initStreetView();
       }
 
       function initMap() {
@@ -124,11 +123,11 @@
         directionsRenderer.setMap(map);
       }
 
-      function initStreetView() {
+      function initStreetView(myXCoord, myYCoord) {
         panorama = new google.maps.StreetViewPanorama(
         document.getElementById('street-view'),
         {
-          position: {lat: 37.869260, lng: -122.254811},
+          position: {lat: myXCoord, lng: myYCoord},
           pov: {heading: 165, pitch: 0},
           zoom: 1
         });
@@ -153,12 +152,11 @@
 
       function showDistance(directionResult) {
         var myRoute = directionResult.routes[0].legs[0];
-        //alert(myRoute.distance.value / 1000 + ' km');
         var numOfSteps = myRoute.steps.length;
         var myStep1Coords = myRoute.steps[Math.floor(numOfSteps / 4)].end_location;
         var myStep2Coords = myRoute.steps[Math.floor(numOfSteps / 2)].end_location;
         var myStep3Coords = myRoute.steps[Math.floor(3 * numOfSteps / 4)].end_location;
-        alert(myStep1Coords + "..." + myStep2Coords + "..." + myStep3Coords);
+        initStreetView(myStep2Coords.lat(), myStep2Coords.lng());
       }
     </script>
     <!-- &libraries=places -->
