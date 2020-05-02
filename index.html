@@ -14,12 +14,14 @@
 </head>
 <body>
     <h3>Scenic Route Picker</h3>
-    <input id="latField" type="number">
-    <input id="longField" type="number">
-    <button type="button" id="testButton" onclick="moveCoords()">test</button>
+    <input id="startDest" type="text">
+    <input id="endDest" type="text">
+    <button type="button" id="testButton" onclick="calcRoute()">Find directions</button>
     <div id="map"></div>
 
     <script>
+      var directionsRenderer;
+      var directionsService;
       var myStyles = [
                 {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
                 {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
@@ -97,27 +99,36 @@
               ];
 
       function initMap() {
+        directionsService = new google.maps.DirectionsService();
+        directionsRenderer = new google.maps.DirectionsRenderer();
         var map = new google.maps.Map(
             document.getElementById('map'), {
               zoom: 11,
               center: {lat: 47.606347, lng: -122.333224},
               styles: myStyles
             });
+        directionsRenderer.setMap(map);
       }
 
-      function moveCoords() {
-        newLat = parseFloat(document.getElementById('latField').value);
-        newLong = parseFloat(document.getElementById('longField').value);
-        var map = new google.maps.Map(
-            document.getElementById('map'), {
-              zoom: 11,
-              center: {lat: newLat, lng: newLong},
-              styles: myStyles
-            });
+      function calcRoute() {
+        var start = document.getElementById('startDest').value;
+        var end = document.getElementById('endDest').value;
+        var request = {
+          origin: start,
+          destination: end,
+          travelMode: 'DRIVING'
+        };
+        directionsService.route(request, function(result, status) {
+          if (status == 'OK') {
+            directionsRenderer.setDirections(result);
+            alert('success!');
+          }
+        });
       }
     </script>
+    <!-- !!! MAY BE OTHER WAY AROUND: LIBRARIES AFTER INITMAP !!! -->
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6T3KGjGonRtvWyilK1M48t6aolQQEBAk&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6T3KGjGonRtvWyilK1M48t6aolQQEBAk&libraries=places&callback=initMap">
     </script>
 </body>
 </html>
