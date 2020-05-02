@@ -17,6 +17,10 @@
         height: 54%;
         width: 80%;
       }
+      #street-view-img {
+        height: 54%;
+        width: 80%;
+      }
     </style>
 </head>
 <body>
@@ -26,6 +30,8 @@
     <button type="button" id="testButton" onclick="calcRoute()">Find Directions</button>
     <div id="map"></div>
     <div id="street-view"></div>
+    <img id="street-view-img" src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=47.5763831,-122.4211769
+    &fov=80&heading=70&pitch=0&key=AIzaSyD6T3KGjGonRtvWyilK1M48t6aolQQEBAk">
 
     <script>
       var panorama;
@@ -123,6 +129,15 @@
         directionsRenderer.setMap(map);
       }
 
+      function updateStreetViewImg(myXCoord, myYCoord) {
+        var newSrc = "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=";
+        newSrc = newSrc.concat(myXCoord);
+        newSrc = newSrc.concat(",");
+        newSrc = newSrc.concat(myYCoord);
+        newSrc = newSrc.concat("&fov=80&heading=70&pitch=0&key=AIzaSyD6T3KGjGonRtvWyilK1M48t6aolQQEBAk");
+        document.getElementById("street-view-img").src = newSrc;
+      }
+
       function initStreetView(myXCoord, myYCoord) {
         panorama = new google.maps.StreetViewPanorama(
         document.getElementById('street-view'),
@@ -156,7 +171,8 @@
         var myStep1Coords = myRoute.steps[Math.floor(numOfSteps / 4)].end_location;
         var myStep2Coords = myRoute.steps[Math.floor(numOfSteps / 2)].end_location;
         var myStep3Coords = myRoute.steps[Math.floor(3 * numOfSteps / 4)].end_location;
-        initStreetView(myStep2Coords.lat(), myStep2Coords.lng());
+        //initStreetView(myStep2Coords.lat(), myStep2Coords.lng());
+        updateStreetViewImg(myStep2Coords.lat(), myStep2Coords.lng());
       }
     </script>
     <!-- &libraries=places -->
