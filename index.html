@@ -140,17 +140,27 @@
         var request = {
           origin: start,
           destination: end,
-          travelMode: 'DRIVING'
+          travelMode: 'DRIVING',
+          provideRouteAlternatives: true
         };
         directionsService.route(request, function(result, status) {
           if (status == 'OK') {
             directionsRenderer.setDirections(result);
-            alert('success!');
+            showDistance(result);
           }
         });
       }
+
+      function showDistance(directionResult) {
+        var myRoute = directionResult.routes[0].legs[0];
+        //alert(myRoute.distance.value / 1000 + ' km');
+        var numOfSteps = myRoute.steps.length;
+        var myStep1Coords = myRoute.steps[Math.floor(numOfSteps / 4)].end_location;
+        var myStep2Coords = myRoute.steps[Math.floor(numOfSteps / 2)].end_location;
+        var myStep3Coords = myRoute.steps[Math.floor(3 * numOfSteps / 4)].end_location;
+        alert(myStep1Coords + "..." + myStep2Coords + "..." + myStep3Coords);
+      }
     </script>
-    <!-- initMap -->
     <!-- &libraries=places -->
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6T3KGjGonRtvWyilK1M48t6aolQQEBAk&callback=initialize">
