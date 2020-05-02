@@ -6,9 +6,16 @@
         background-color: black;
         color: white;
       }
+      html, body {
+        height: 100%;
+      }
       #map {
-        height: 700px;
-        width: 100%;
+        height: 54%;
+        width: 80%;
+      }
+      #street-view {
+        height: 54%;
+        width: 80%;
       }
     </style>
 </head>
@@ -16,10 +23,12 @@
     <h3>Scenic Route Picker</h3>
     <input id="startDest" type="text">
     <input id="endDest" type="text">
-    <button type="button" id="testButton" onclick="calcRoute()">Find directions</button>
+    <button type="button" id="testButton" onclick="calcRoute()">Find directions</button>-->
     <div id="map"></div>
+    <div id="street-view"></div>
 
     <script>
+      var panorama;
       var directionsRenderer;
       var directionsService;
       var myStyles = [
@@ -98,6 +107,11 @@
                 }
               ];
 
+      function initialize() {
+        initMap();
+        initStreetView();
+      }
+
       function initMap() {
         directionsService = new google.maps.DirectionsService();
         directionsRenderer = new google.maps.DirectionsRenderer();
@@ -108,6 +122,16 @@
               styles: myStyles
             });
         directionsRenderer.setMap(map);
+      }
+
+      function initStreetView() {
+        panorama = new google.maps.StreetViewPanorama(
+        document.getElementById('street-view'),
+        {
+          position: {lat: 37.869260, lng: -122.254811},
+          pov: {heading: 165, pitch: 0},
+          zoom: 1
+        });
       }
 
       function calcRoute() {
@@ -126,9 +150,10 @@
         });
       }
     </script>
-    <!-- !!! MAY BE OTHER WAY AROUND: LIBRARIES AFTER INITMAP !!! -->
+    <!-- initMap -->
+    <!-- &libraries=places -->
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6T3KGjGonRtvWyilK1M48t6aolQQEBAk&libraries=places&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6T3KGjGonRtvWyilK1M48t6aolQQEBAk&callback=initialize">
     </script>
 </body>
 </html>
